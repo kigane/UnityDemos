@@ -13,10 +13,10 @@ namespace Demos
         private void Start()
         {
             // 创建Table
-            CreateDB();
+            // CreateDB();
 
             // 添加数据
-            AddPerson(1, "Hello", "World");
+            AddPerson(1, "Hello1", "World1");
 
             // 查询数据
             QueryAllPerson();
@@ -46,7 +46,10 @@ namespace Demos
 
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = $"INSERT INTO Person (Id, FirstName, SecondName) VALUES (null, '{firstName}', '{secondName}');";
+                    command.CommandText = "INSERT INTO Person (Id, FirstName, SecondName) VALUES (null, @firstName, @secondName);";
+                    command.Parameters.AddWithValue("@firstName", firstName);
+                    command.Parameters.AddWithValue("@secondName", secondName);
+                    command.Prepare();
                     command.ExecuteNonQuery();
                 }
 
