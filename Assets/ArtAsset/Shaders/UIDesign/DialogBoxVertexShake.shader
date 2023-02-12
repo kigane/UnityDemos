@@ -112,7 +112,16 @@ Shader "UI/DialogBoxVertexShake"{
             fixed4 frag(v2f IN) : SV_Target
             {
                 half4 color = tex2D(_MainTex,IN.texcoord) * IN.color * _Color;
-                return color;
+                // return color;
+                // SDF抗锯齿。没看明白，效果也不明显。
+                float3 c = color.rgb;
+                float a = color.a;
+                float smoothValue = 0;
+                float delta = 6 * fwidth(IN.texcoord.x);//6*_Delta;//
+                float v = IN.texcoord.x + delta;
+                smoothValue = step(1.0, v) * (v -1) / delta;
+                a = smoothstep(a, 0.0f, smoothValue);
+                return float4(c, a);
             }
             ENDCG
         }
