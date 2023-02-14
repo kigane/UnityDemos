@@ -10,27 +10,23 @@ namespace Demos
     {
         protected Material material;
         private MeshRenderer meshRenderer;
-        [SerializeField] private string shaderPath;
+        [SerializeField] private string shaderPath = "Toy/ToyShader01";
 
         [Header("Shader Variables")]
         [SerializeField] private Texture2D _mainTex;
         [SerializeField, ColorUsage(true, false)] private Color _Color;
 
         private int _colorId = Shader.PropertyToID("_Color");
-
-        private void Awake()
-        {
-            Log.Debug("Awake");
-        }
+        private string prevShaderPath = "";
 
         private void OnEnable()
         {
-            Log.Debug("OnEnable");
             meshRenderer = this.GetComponent<MeshRenderer>();
             if (material == null)
             {
                 material = new Material(Shader.Find(shaderPath));
                 meshRenderer.material = material;
+                prevShaderPath = shaderPath;
             }
 
             material.mainTexture = _mainTex;
@@ -81,6 +77,16 @@ namespace Demos
             {
                 return;
             }
+
+            if (prevShaderPath != shaderPath)
+            {
+                Shader shader = Shader.Find(shaderPath);
+                if (shader == null)
+                    return;
+                material = new Material(shader);
+                meshRenderer.material = material;
+            }
+
             material.mainTexture = _mainTex;
             material.SetColor(_colorId, _Color);
             SetMatProperties();

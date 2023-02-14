@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &29238325
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -441,9 +441,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloomShader: {fileID: 4800000, guid: 683e3cde4e443064da112e219f623e81, type: 3}
   iterations: 3
-  blurSpread: 0.89
-  downSample: 2
-  luminanceThreshold: 0.3
+  blurSpread: 1.92
+  downSample: 3
+  luminanceThreshold: 0.15
 --- !u!1 &1815245581
 GameObject:
   m_ObjectHideFlags: 0
