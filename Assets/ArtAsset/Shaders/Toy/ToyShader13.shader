@@ -1,4 +1,4 @@
-Shader "Toy/ToyShader12"
+Shader "Toy/ToyShader13"
 {
     Properties
     {
@@ -64,18 +64,19 @@ Shader "Toy/ToyShader12"
                 float theta = _Time.y;
                 float radius = 0.3;
                 float2 pos = remap(0, 1, st, -1, 1); 
-
-                // float r = length(pos);
-                // r = step(r, radius);
-                // float2 p = radius * float2(cos(theta), -sin(theta));
-                // float l = length( pos - p*clamp( dot(pos,p)/dot(p,p), 0.0, 1.0) );
-                // color = l
+                float r = length(pos);
+                r = step(r, radius);
+                float2 p = radius * float2(cos(theta), -sin(theta));
+                float l = length( pos - p*clamp( dot(pos,p)/dot(p,p), 0.0, 1.0) );
+                color = lineSegmentSdf(pos, float2(0, 0), float2(cos(_Time.y), sin(_Time.y)), st.y * 0.05);
+                color = smoothstep(0.005, 0, color);
+                color *= lerp(fixed3(0, 1, 0), fixed3(1, 0, 1), 1 - length(pos));
 
                 // st = float2(atan2(pos.x, pos.y) / TWO_PI + 0.5, length(pos));
                 // color = smoothstep(0.051, 0.058, st.y);
                 // color *= smoothstep(0.02, 0, frac(st.x + _Time.y/3));
 
-                color = movingRing(IN.uv, 0.1, 0.05, 1.2);
+                // color = movingRing(IN.uv, 0.1, 0.05, 1.2);
                 return fixed4(color, 1.0);
             }
 

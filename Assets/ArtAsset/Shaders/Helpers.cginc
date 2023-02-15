@@ -111,12 +111,20 @@
         return smoothstep(radius, radius + radius * 0.02, apothem);
     }
 
-    // SDF
-    // float rect(float2 uv, float2 size)
-    // {
-        //     uv = (uv - 0.5) * 2;
-        //     return length(max(abs(uv)-size, 0)) + min(maxcomp(abs(uv) - size), 0);
-    // }
+    // SDFs
+    float rectSdf(float2 uv, float2 size)
+    {
+        uv = (uv - 0.5) * 2;
+        return length(max(abs(uv)-size, 0)) + min(maxcomp(abs(uv) - size), 0);
+    }
+
+    float lineSegmentSdf(float2 p, float2 a, float2 b, float radius)
+    {
+        // h 是AP在AB上的投影长度用AB的长度归一化后的结果。
+        // clamp将p在AB外的情况也合并进来了。
+        float h = clamp(dot(p-a, b-a) / dot(b-a, b-a), 0, 1);
+        return length(p - a - h*(b - a)) - radius;
+    }
 
     float2x2 rotate2d(float angle)
     {
