@@ -5,19 +5,6 @@ using System.Diagnostics;
 
 public class Log
 {
-    // private static string ConstructArrayMessage(object[] arr)
-    // {
-    //     string msg = "[ ";
-    //     for (int i = 0; i < arr.Length; i++)
-    //     {
-    //         if (i == arr.Length - 1)
-    //             msg += arr[i].ToString() + " ]";
-    //         else
-    //             msg += arr[i].ToString() + ", ";
-    //     }
-    //     return msg;
-    // }
-
     private static void LogWithColorAndSize(object obj, string color, int size)
     {
         if (obj is null)
@@ -81,23 +68,17 @@ public class Log
         LogWithColorAndSize(header + ": " + message, "cyan", size);
     }
 
-    // [Conditional("Debug")]
-    // public static void Debug(object[] message, int size = -1)
-    // {
-    //     LogWithColorAndSize(ConstructArrayMessage(message), "cyan", size);
-    // }
-
     [Conditional("Debug"), Conditional("Info")]
     public static void Info(object message, int size = -1)
     {
         LogWithColorAndSize(message, "green", size);
     }
 
-    // [Conditional("Debug"), Conditional("Info")]
-    // public static void Info(object[] message, int size = -1)
-    // {
-    //     LogWithColorAndSize(ConstructArrayMessage(message), "green", size);
-    // }
+    [Conditional("Debug"), Conditional("Info")]
+    public static void Info(string header, object message, int size = -1)
+    {
+        LogWithColorAndSize(header + ": " + message, "green", size);
+    }
 
     [Conditional("Debug"), Conditional("Info"), Conditional("Warning")]
     public static void Warning(object message, int size = -1)
@@ -105,21 +86,9 @@ public class Log
         LogWithColorAndSize(message, "yellow", size);
     }
 
-    // [Conditional("Debug"), Conditional("Info"), Conditional("Warning")]
-    // public static void Warning(object[] message, int size = -1)
-    // {
-    //     LogWithColorAndSize(ConstructArrayMessage(message), "yellow", size);
-    // }
-
     [Conditional("Debug"), Conditional("Info"), Conditional("Warning"), Conditional("Error")]
     public static void Error(object message, int size = -1)
     {
         LogWithColorAndSize(message, "red", size);
     }
-
-    // [Conditional("Debug"), Conditional("Info"), Conditional("Warning"), Conditional("Error")]
-    // public static void Error(object[] message, int size = -1)
-    // {
-    //     LogWithColorAndSize(ConstructArrayMessage(message), "red", size);
-    // }
 }

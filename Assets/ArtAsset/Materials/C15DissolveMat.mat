@@ -63,7 +63,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
-    - _BurnAmount: 0.105736494
+    - _BurnAmount: 0.4790554
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
